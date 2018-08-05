@@ -1,19 +1,25 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
-
-import DictationAnalysis from './components/DictationAnalysis'
+import DictationAnalysis from "./components/DictationAnalysis";
+import DictationPicker from "./components/DictationPicker";
+import Heading from "./components/Heading";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 class App extends Component {
     render() {
-        let correctSpellings = ["bleauh", "allo"];
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <DictationAnalysis correctSpellings={correctSpellings}/>
+            <div>
+                <BrowserRouter>
+                    <div>
+                        <Heading />
+                        <Switch>
+                            <Route path='/dictations' component={DictationPicker}/>
+                            <Route path='/analyses?dictation=:id' component={DictationAnalysis}/>
+                            {/* when none of the above match, <NoMatch> will be rendered */}
+                            {/*<Route component={NoMatch}/>*/}
+                        </Switch>
+                    </div>
+                </BrowserRouter>
             </div>
         );
     }
