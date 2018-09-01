@@ -6,7 +6,8 @@ class DictationEditor extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {...props.dictation, ...{wordToAdd: '', closeModal: props.closeModal}};
+        const dictation = props.dictation;
+        this.state = Object.assign({}, dictation, {wordToAdd: '', closeModal: props.closeModal, saveDictation: props.saveDictation});
 
         this.handleRemoveWord = this.handleRemoveWord.bind(this);
         this.handleAddWord = this.handleAddWord.bind(this);
@@ -18,16 +19,14 @@ class DictationEditor extends Component {
 
     handleRemoveWord(wordIndex) {
         this.setState((prevState) => {
-                prevState.entries.splice(wordIndex, 1);
-                return prevState;
+                return Object.assign({}, prevState, {entries: prevState.entries.filter((word, index) => index !== wordIndex)});
             }
         )
     }
 
     handleAddWord() {
         this.setState((prevState) => {
-                prevState.entries.push(prevState.wordToAdd);
-                return { ...prevState, ...{wordToAdd: ''}};
+                return { ...prevState, ...{entries: prevState.entries.concat(prevState.wordToAdd), wordToAdd: ''}};
             }
         );
     }
@@ -51,6 +50,11 @@ class DictationEditor extends Component {
     }
 
     handleSaveDictation() {
+        this.state.saveDictation(Object.assign({}, {
+            id: this.state.id,
+            name: this.state.name,
+            entries: this.state.entries
+        }));
         this.state.closeModal();
     }
 

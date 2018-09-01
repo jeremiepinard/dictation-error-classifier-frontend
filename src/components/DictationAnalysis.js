@@ -5,7 +5,6 @@ import Table from 'react-bootstrap/lib/Table';
 class DictationAnalysis extends Component {
 
     constructor(props) {
-        console.log(props)
         super(props);
 
         // use instead the redux store to kow which dictation was picked
