@@ -51,3 +51,35 @@ export function updateDictation(dictation) {
             })
     };
 }
+
+export function createDictationSuccess(dictation) {
+    return {type: types.CREATE_DICTATION_SUCCESS, dictation: dictation};
+}
+
+export function createDictationError(i) {
+    return {type: types.CREATE_DICTATION_ERROR};
+}
+
+export function createDictation(dictation) {
+    return dispatch => {
+        const url = `${endpoint}/api/v1/dictations`;
+        return axios.post(url, {
+            name: dictation.name,
+            entries: dictation.entries
+        })
+            .then(function (response) {
+                console.log(`POST ${url} returned the successful response: `, response);
+                let dictationId = "";
+                if(response.headers.location) {
+                    const uriSegments = response.headers.location.split('/');
+                    dictationId = uriSegments[uriSegments.length - 1];
+                }
+                console.log(`created dictation has id [${dictationId}]`)
+                dispatch(createDictationSuccess(Object.assign({}, dictation, {id: dictationId})));
+            })
+            .catch(function (error) {
+                console.log(`POST ${url} returned the error: `, error);
+                dispatch(createDictationError());
+            })
+    };
+}

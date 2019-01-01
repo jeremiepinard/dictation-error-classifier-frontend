@@ -1,5 +1,15 @@
 import initialState from './initialState';
-import {FETCH_DICTATIONS, RECEIVE_DICTATIONS, RECEIVE_DICTATIONS_ERROR, UPDATE_DICTATION, UPDATE_DICTATION_SUCCESS, UPDATE_DICTATION_ERROR} from '../actions/actionTypes';
+import {
+    FETCH_DICTATIONS,
+    RECEIVE_DICTATIONS,
+    RECEIVE_DICTATIONS_ERROR,
+    UPDATE_DICTATION,
+    UPDATE_DICTATION_ERROR,
+    UPDATE_DICTATION_SUCCESS,
+    CREATE_DICTATION,
+    CREATE_DICTATION_ERROR,
+    CREATE_DICTATION_SUCCESS
+} from '../actions/actionTypes';
 
 export default function dictations(state = initialState.dictations, action) {
     switch (action.type) {
@@ -20,6 +30,15 @@ export default function dictations(state = initialState.dictations, action) {
             return state.filter(dictation => dictation.id !== action.dictation.id).concat(Object.assign({}, action.dictation));
         case UPDATE_DICTATION_ERROR:
             console.log('UPDATE_DICTATION_ERROR Action');
+            return state;
+        case CREATE_DICTATION:
+            console.log('CREATE_DICTATION Action');
+            return action;
+        case CREATE_DICTATION_SUCCESS:
+            console.log('CREATE_DICTATION_SUCCESS Action', action);
+            return state.concat(Object.assign({}, action.dictation));
+        case CREATE_DICTATION_ERROR:
+            console.log('CREATE_DICTATION_ERROR Action');
             return state;
         default:
             return state;
