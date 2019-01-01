@@ -13,7 +13,7 @@ export function receiveDictationsError() {
 
 export function fetchDictations() {
     return dispatch => {
-        const url = `${endpoint}/api/v1/dictations`;
+        const url = endpoint('/api/v1/dictations');
         return axios.get(url)
             .then(function (response) {
                 console.log(`GET ${url} returned the successful response: `, response);
@@ -36,7 +36,7 @@ export function updateDictationError(i) {
 
 export function updateDictation(dictation) {
     return dispatch => {
-        const url = `${endpoint}/api/v1/dictations/${dictation.id}`;
+        const url = endpoint(`/api/v1/dictations/${dictation.id}`);
         return axios.put(url, {
                 name: dictation.name,
                 entries: dictation.entries
@@ -62,7 +62,7 @@ export function createDictationError(i) {
 
 export function createDictation(dictation) {
     return dispatch => {
-        const url = `${endpoint}/api/v1/dictations`;
+        const url = endpoint('/api/v1/dictations');
         return axios.post(url, {
             name: dictation.name,
             entries: dictation.entries
